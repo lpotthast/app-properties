@@ -55,7 +55,9 @@ pub fn store(input: TokenStream) -> TokenStream {
                 let serialized = include_str!(#src_path);
                 let mut deserialized: #raw_ident = serde_yaml::from_str(serialized)
                     .context(DeserializeYamlSnafu {})?;
-                Ok(deserialized.replace_env(replace_env::Metadata { secret: false }).into())
+                let replaced: #raw_ident = replace_env::ReplaceEnv::replace_env(deserialized, replace_env::Metadata { secret: false });
+                let as_ident: #ident = replaced.into();
+                Ok(as_ident)
             }
         }
     }
