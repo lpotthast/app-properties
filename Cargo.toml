@@ -1,3 +1,7 @@
 [workspace]
 resolver = "2"
 members = ["crates/*"]
+
+[workspace.dependencies]
+app-properties = { path = "./crates/app-properties", version = "0.1.0" }
+derive-app-properties = { path = "./crates/derive-app-properties", version = "0.1.0" }
