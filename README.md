@@ -1,9 +1,8 @@
 # app-properties
 
-## TODO
+This repository hosts the following crates:
 
-- Write this readme.
-- Use error type in parsing.
-- Add tests for proc macro.
-- Finalize Cargo.toml.
-- Release on crates.io.
+| Crate                 | Readme                                           |
+|-----------------------|--------------------------------------------------|
+| app-properties        | [README](crates/app-properties/README.md)        |
+| derive-app-properties | [README](crates/derive-app-properties/README.md) |
