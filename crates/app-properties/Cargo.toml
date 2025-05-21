@@ -1,8 +1,8 @@
 [package]
 name = "app-properties"
 version = "0.1.0"
-edition = "2021"
-rust-version = "1.64.0"
+edition = "2024"
+rust-version = "1.85.0"
 authors = ["Lukas Potthast <privat@lukas-potthast.de>"]
 license = "MIT OR Apache-2.0"
 readme = "README.md"
@@ -10,7 +10,7 @@ repository = "https://github.com/lpotthast/app-properties"
 description = """
 Derive and load AppProperties.
 """
-categories = ["configuration"]
+categories = ["config"]
 keywords = ["properties", "app-properties", "configuration", "env"]
 
 [dependencies]
