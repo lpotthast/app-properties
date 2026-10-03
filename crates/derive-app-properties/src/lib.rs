@@ -35,12 +35,26 @@ pub fn store(input: TokenStream) -> TokenStream {
     let src_path = input.src;
 
     quote! {
-        #[derive(Debug, snafu::Snafu)]
+        #[derive(Debug)]
         pub enum #error_type {
-            #[snafu(display("AppPropertiesError: Unable to deserialize YAML string."))]
-            DeserializeYaml {
-                source: serde_yaml::Error,
-                backtrace: snafu::Backtrace,
+            DeserializeYaml { source: serde_yaml::Error },
+        }
+
+        impl std::fmt::Display for #error_type {
+            fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                match self {
+                    Self::DeserializeYaml { .. } => {
+                        write!(f, "AppPropertiesError: Unable to deserialize YAML string.")
+                    }
+                }
+            }
+        }
+
+        impl std::error::Error for #error_type {
+            fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+                match self {
+                    Self::DeserializeYaml { source } => Some(source),
+                }
             }
         }
 
@@ -49,12 +63,10 @@ pub fn store(input: TokenStream) -> TokenStream {
 
             #[tracing::instrument(level = "info", name = "load_properties")]
             fn load() -> Result<Self, Self::Error> {
-                use snafu::ResultExt;
-
                 tracing::info!(src_path = #src_path, "Using source");
                 let serialized = include_str!(#src_path);
                 let mut deserialized: #raw_ident = serde_yaml::from_str(serialized)
-                    .context(DeserializeYamlSnafu {})?;
+                    .map_err(|source| #error_type::DeserializeYaml { source })?;
                 let replaced: #raw_ident = replace_env::ReplaceEnv::replace_env(deserialized, replace_env::Metadata { secret: false });
                 let as_ident: #ident = replaced.into();
                 Ok(as_ident)
