@@ -15,3 +15,6 @@ keywords = ["properties", "app-properties", "configuration", "env"]
 
 [dependencies]
 derive-app-properties = { workspace = true }
+
+[lints]
+workspace = true
