@@ -4,9 +4,8 @@
 use darling::FromDeriveInput;
 use proc_macro::TokenStream;
 use proc_macro2::{Ident, Span};
-use proc_macro_error::proc_macro_error;
 use quote::quote;
-use syn::{parse_macro_input, DeriveInput};
+use syn::{DeriveInput, parse_macro_input};
 
 #[derive(Debug, FromDeriveInput)]
 #[darling(attributes(app_properties), supports(struct_any))]
@@ -17,7 +16,6 @@ struct MyInputReceiver {
 }
 
 #[proc_macro_derive(AppProperties, attributes(app_properties))]
-#[proc_macro_error]
 pub fn store(input: TokenStream) -> TokenStream {
     let ast = parse_macro_input!(input as DeriveInput);
 
@@ -27,9 +25,9 @@ pub fn store(input: TokenStream) -> TokenStream {
     };
 
     let ident = &input.ident;
-    let raw_ident = Ident::new(format!("Raw{}", ident).as_str(), Span::call_site());
+    let raw_ident = Ident::new(format!("Raw{ident}").as_str(), Span::call_site());
 
-    let error_type = Ident::new(format!("{}Error", ident).as_str(), Span::call_site());
+    let error_type = Ident::new(format!("{ident}Error").as_str(), Span::call_site());
 
     // We currently only support one option: Loading the source file with the include_str! macro.
     let src_path = input.src;

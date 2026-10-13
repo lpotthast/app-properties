@@ -3,8 +3,8 @@ resolver = "2"
 members = ["crates/*"]
 
 [workspace.dependencies]
-app-properties = { path = "./crates/app-properties", version = "0.1.0" }
-derive-app-properties = { path = "./crates/derive-app-properties", version = "0.1.0" }
+app-properties = { path = "./crates/app-properties", version = "0.1.0", default-features = false, features = [] }
+derive-app-properties = { path = "./crates/derive-app-properties", version = "0.1.0", default-features = false, features = [] }
 
 [workspace.lints.clippy]
 all = { level = "deny", priority = -1 }

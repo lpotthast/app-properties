@@ -2,7 +2,7 @@
 name = "derive-app-properties"
 version = "0.1.0"
 edition = "2024"
-rust-version = "1.85.0"
+rust-version = "1.88.0"
 authors = ["Lukas Potthast <privat@lukas-potthast.de>"]
 license = "MIT OR Apache-2.0"
 readme = "README.md"
@@ -17,11 +17,10 @@ keywords = ["properties", "app-properties", "configuration", "env"]
 proc-macro = true
 
 [dependencies]
-darling = "0.20"
-proc-macro-error = "1"
-proc-macro2 = "1"
-quote = "1"
-syn = { version = "2", features = ["extra-traits"] }
+darling = { version = "0.24.1", default-features = false, features = ["suggestions"] }
+proc-macro2 = { version = "1.0.107", default-features = false, features = ["proc-macro"] }
+quote = { version = "1.0.47", default-features = false, features = [] }
+syn = { version = "3.0.9", default-features = false, features = ["clone-impls", "derive", "parsing", "printing", "proc-macro"] }
 
 [lints]
 workspace = true
